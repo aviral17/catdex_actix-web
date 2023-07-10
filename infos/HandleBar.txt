@@ -1,0 +1,51 @@
+HandleBars installed so that we can use Template type structure in HTML, so that we dont need to render each image separately line by line
+
+serde_json = "1.0.53"
+handlebars = { version = "3.0.1", features = ["dir_source"] }  ,,,, add this to Cargo.toml
+
+-----------------------********************************------------------------------************************--------------------------
+
+HandleBars Templates with main.rs
+
+how the templates are loaded ---->  Handlebars loads 
+and compiles the templates before using them. And it caches the compiled 
+templates so they don’t need to be recompiled every time you use them. 
+Therefore, we can initialize the Handlebars template engine in the main()
+function. To initialize a Handlebars instance, call Handlebars::new(). 
+Then, we use the register_templates_directory() function to register 
+all the templates with the.html file extension in the ./static/ folder. 
+This function is guarded by a dir_source feature, which we enabled in 
+Cargo.toml (Listing 2-7).
+As mentioned, Actix creates multiple App instances in multiple threads. 
+To avoid recompiling the templates in each thread, we need a way to 
+share this Handlebars instance across threads. To share states between 
+threads, you can use the web::Data provided by Actix. The shared state 
+Chapter 2 Developing Websites
+26
+5
+Quoting the official tagline: “Serde is a framework for serializing and deserializing 
+Rust data structures efficiently and generically.”
+wrapped inside web::Data must be shareable between threads. Luckily, 
+Handlebars is Send + Sync, so it can be used in web::Data. We call the 
+web::Data::new() function and pass the Handlebars instance to it.
+The web::Data object is provided to the App builder by the .app_data()
+function. Because web::Data wraps this Handlebars with an Arc internally, 
+we can cheaply clone it to give a copy to each App object. The App factory 
+closure now needs to take ownership of the cloned web::Data object, so 
+you need to add move for the closure.
+The index handle gets the shared state from its parameter. You might 
+notice that the parameter has the type web::Data<Handlebars<' >>. In 
+the handler, you can use the hb.render() call to render the template. 
+Remember that the template needs data to fill in the dynamic fields. The 
+render function can take any data that implements the Serialize trait 
+from the serde5
+ crate. This means that anything that can be serialized is 
+fine. For a quick demonstration, we use the json! macro so we can write 
+some test data in JSON format. The json! macro will convert it into a 
+serde_json::Value, which implements the Serialize trait.
+As you can see in the code, the data we provide has two keys:
+• project_name: A string that is used in the HTML 
+<title> and <h1>.
+• cats: An array of the cat’s name and image path. This is 
+used to generate the list of cats.
+You can find that such keys are used in the template

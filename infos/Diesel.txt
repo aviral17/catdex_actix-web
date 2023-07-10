@@ -1,0 +1,32 @@
+A) Once the database is up and running, we can start setting up Diesel. 
+Diesel provides a command-line tool, which you can install using this 
+command:
+
+Please run this command first:  ----> 1) sudo apt-get install libpq-dev
+
+2) cargo install diesel_cli --no-default-features --features postgres
+
+******************** ---------------------- *********
+
+Diesel can work with different databases, like MySQL and SQLite. 
+By default, the CLI will work with all of them, but here we use the 
+--no-default-features and --features postgres flags to tell cargo to 
+only install the PostgreSQL integration. You might get a warning about 
+the ld linker not being able to find the pg library. This is because, during 
+the installation process, the tool needs to compile with the PostgreSQL 
+headers. You can install the header files with:
+
+sudo apt-get install libpq-dev
+
+We need to tell the "diesel" command-line tool about the database’s 
+URL through an environment variable. Whenever we want to connect to DATABASE, we can only do so via Environment variable by exproting it. 
+Run this command in the terminal to set it:
+
+1) << $  export DATABASE_URL=postgres://postgres:mypassword@localhost
+
+---------------------------------------------------------------------------------------------------------------------
+
+Then run the diesel setup command in the Catdex project directory. 
+This will create a migration folder to keep the schema migration files, and 
+a diesel.toml configuration file to tell the "diesel" tool to update the 
+src/schema.rs file every time the schema updates.

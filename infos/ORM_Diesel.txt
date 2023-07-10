@@ -1,0 +1,6 @@
+An ORM allows you to manipulate data 
+in the database as native Rust objects. The ORM will convert the Rust 
+code to raw SQL under the hood and communicate with the database. It 
+abstracts away the database so you can work with familiar Rust syntax. It 
+also allows you to change the SQL engine (e.g., MySQL, SQLite) without 
+rewriting all the code. The ORM we are going to use is called Diesel

@@ -1,0 +1,49 @@
+A) docker run \
+ --name catdex-db \
+ -e POSTGRES_PASSWORD=mypassword \
+ -p 5432:5432 \
+ -d \
+ postgres:12.3-alpine
+
+B) Before we use Rust code to interact with the database, we can use 
+the command-line client to test the database. Install the PostgreSQL 
+command-line client psql with the following command9
+:
+sudo apt-get install postgresql-client
+
+C) PGPASSWORD=mypassword psql -h localhost -p 5432 --username=postgres -w   instead of this (non-working-> error) psql -h localhost -p 5432 --username=postgres --password=mypassword
+
+************  The psql version you get from apt-get might not match your PostgreSQL 
+server version. For most of the operations we are doing in this project, the 
+version mismatch won’t cause any problem. But if you are experiencing issues, 
+try installing the psql client with the matching version from https://www.
+postgresql.org/download/.
+   The username postgres is the default created by the postgres:12.3-alphine
+image
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

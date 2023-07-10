@@ -1,0 +1,21 @@
+use actix_files::{Files,NamedFile};  // See below
+use actix_web::{web, App, HttpServer, Result};
+
+async fn index() -> Result<NamedFile> {
+    Ok(NamedFile::open("./static/index.html")?) // NamedFile::open() open file in read-only mode
+   }
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+println!("Listening on port 8080");
+HttpServer::new(|| {
+App::new().service(Files::new("/static", "static").show_files_listing())  
+.route("/", web::get().to(index))
+})
+.bind("127.0.0.1:8080")?
+.run()
+.await   
+
+}
+
+/*         Using actix Files for HTML pages, we added using cargo add ...... and Files for static files like images and so using it in .service(Files::new("/static","static").show_files_listing()) ---> show_files_listing() shoes indexOf when using localhost:8080/static, we deined /static inside Files::new(), which shows indexOf type which is not at all recommended in Porduction mode  */

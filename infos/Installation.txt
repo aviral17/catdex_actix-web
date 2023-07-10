@@ -1,0 +1,28 @@
+A)  cargo new hello-world
+    cd hello-world
+    cargo install cargo-edit
+    cargo add actix-web
+
+B) 2nd Project -------> 
+
+    cargo new catdex
+    cd catdex
+    cargo add actix-web actix-files
+    mkdir static
+    mkdir static/css
+    mkdir static/image
+
+
+    {{ Tip The cargo-edit extension will add a new command called 
+       cargo add. This helps you add new cargo dependencies without 
+       manually editing Cargo.toml. ))
+
+
+
+
+
+
+
+
+   
+       
