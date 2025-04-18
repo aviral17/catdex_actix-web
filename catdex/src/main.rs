@@ -27,7 +27,7 @@ async fn index(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
  HttpResponse::Ok().body(body)
 }
 
-// Use latest Actix Web version
+// Use latest Actix Web version and also latest version of RUST
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
  let mut handlebars = Handlebars::new();
