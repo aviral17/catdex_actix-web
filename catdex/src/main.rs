@@ -3,7 +3,7 @@ use actix_files::Files;
 use actix_web::{web, App, HttpResponse, HttpServer};
 use handlebars::Handlebars;
 
-// update it as per latest changes in RUST
+// update it as per latest changes in RUST and Actix Web
 async fn index(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
  let data = json!({
  "project_name": "Catdex",
